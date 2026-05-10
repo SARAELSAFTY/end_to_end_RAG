@@ -1,10 +1,38 @@
 [project]
 name = "end-to-end-rag"
 version = "0.1.0"
-description = "Add your description here"
+description = "CPU-optimized RAG pipeline"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "requests>=2.33.1",
-
+    "streamlit==1.35.0",
+    "langchain==0.2.11",
+    "langchain-community==0.2.10",
+    "langchain-huggingface==0.0.3",
+    "faiss-cpu==1.9.0.post1",
+    "sentence-transformers==3.0.1",
+    "pypdf==4.3.1",
+    "pypdfium2==4.30.0",
+    "pytesseract==0.3.13",
+    "Pillow==10.4.0",
+    "transformers==4.43.3",
+    "accelerate==0.33.0",
+    "pytest==8.3.2",
+    "pandas==2.2.2",
+    "numpy==1.26.4",
+    "python-dotenv==1.0.1",
+    "torch", # Explicitly add torch to ensure the source override works
 ]
+
+# 1. Define the official PyTorch CPU repository
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+# 2. Tell uv to fetch torch and its friends ONLY from the CPU index
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+torchvision = { index = "pytorch-cpu" }
+torchaudio = { index = "pytorch-cpu" }
